@@ -1,0 +1,22 @@
+{
+  "name": "Craft Bar Website",
+  "description": "RESTfull app using MEAN",
+  "keywords": [
+    "Express",
+    "Angular",
+    "Node",
+    "MongoDB",
+    "mLab"
+  ],
+  "repository": "https://github.com/ShellyXueHan/craft-bar",
+  "success_url": "/",
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "addons": [
+    "mongolab"
+  ]
+}
