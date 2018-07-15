@@ -48,7 +48,7 @@ export class BeerListComponent implements OnInit {
       price: 0,
     };
 
-    // By default, a newly-created beer will have the selected state.
+    // Keep the created item selected:
     this.selectBeer(beer);
   }
 
