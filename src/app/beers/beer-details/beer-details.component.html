@@ -1,0 +1,29 @@
+<div *ngIf="beer" class="row">
+  <div class="col-md-12">
+    <h2 *ngIf="beer._id">Beer Details</h2>
+    <h2 *ngIf="!beer._id">New Beer</h2>
+  </div>
+</div>
+<div *ngIf="beer" class="row">
+  <form class="col-md-12">
+    <div class="form-group">
+      <label for="beer-name">Name</label>
+      <input class="form-control" name="beer-name" [(ngModel)]="beer.name" placeholder="beer"/>
+    </div>
+    <div class="form-group">
+      <label for="beer-brewery">Brewery</label>
+      <input class="form-control" name="beer-brewery" [(ngModel)]="beer.brewery" placeholder="N/A"/>
+    </div>
+    <div class="form-group">
+      <label for="beer-type">Type/Style</label>
+      <input class="form-control" name="beer-type" [(ngModel)]="beer.type" placeholder="N/A"/>
+    </div>
+    <div class="form-group">
+      <label for="beer-price">Price</label>
+      <input class="form-control" name="beer-price" [(ngModel)]="beer.price" placeholder="N/A"/>
+    </div>
+    <button class="btn btn-primary" *ngIf="!beer._id" (click)="createBeer(beer)">Create</button>
+    <button class="btn btn-info" *ngIf="beer._id" (click)="updateBeer(beer)">Update</button>
+    <button class="btn btn-danger" *ngIf="beer._id" (click)="deleteBeer(beer._id)">Delete</button>
+  </form>
+</div>
