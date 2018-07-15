@@ -8,6 +8,10 @@ var BEERS_COLLECTION = "beers";
 var app = express();
 app.use(bodyParser.json());
 
+// Link to Angular build artifacts:
+var distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
+
 // DB object:
 var db;
 
@@ -78,7 +82,7 @@ app.put("/api/beers/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(BEERS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(BEERS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, {$set: updateDoc}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update beer");
     } else {
