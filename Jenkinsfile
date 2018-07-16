@@ -1,17 +1,15 @@
-node('node') {
-    currentBuild.result = "SUCCESS"
-    try {
-       stage('Checkout'){
-          checkout scm
-       }
-       stage('Test'){
-         sh 'node -v'
-         sh 'npm install'
-
-       }
+pipeline {
+    agent {
+        docker {
+            image 'node:6-alpine' 
+            args '-p 3000:3000' 
+        }
     }
-    catch (err) {
-        currentBuild.result = "FAILURE"
-        throw err
+    stages {
+        stage('Build') { 
+            steps {
+                sh 'npm install' 
+            }
+        }
     }
 }
