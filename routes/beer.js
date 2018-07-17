@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 // Get the helper functions:
-const validateBeer = require('../scripts/beerCheck').validateBeer;
-const isValidID = require('../scripts/beerCheck').isValidID;
-const errorResponseHandler = require('../scripts/errorHandlers').errorResponseHandler;
+const validateBeer = require('../lib/beerCheck').validateBeer;
+const isValidID = require('../lib/beerCheck').isValidID;
+const errorResponseHandler = require('../lib/errorHandlers').errorResponseHandler;
 
 // Connect to query:
 const query = require('../db/query');
