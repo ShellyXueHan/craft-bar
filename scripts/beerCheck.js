@@ -1,5 +1,4 @@
-// Connection to db:
-const knex = require('../db/knex');
+const errorResponseHandler = require('./errorHandlers');
 
 /**
  * This function validates a beer and provide response:
@@ -20,32 +19,7 @@ function validateBeer(req, res, callback) {
     };
     callback(beer);
   } else {
-    res.status(500);
-    res.render('error', { message: 'Invalid id in 1!'});
-  }
-}
-
-/**
- * This function renders a beer and provide response:
- *  - if beer ID is valid:
- *    - get the beer details with the ID
- *    - render the beer
- *  - if not:
- *    - 500 error
-**/
-function renderBeer(id, res, viewName) {
-  console.log('render beer');
-  if(isValidID(id)) {
-    knex('beer')
-      .select()
-      .where('id', id)
-      .first()
-      .then(beer => {
-        res.render(viewName, beer);
-      });
-  } else {
-    res.status(500);
-    res.render('error', { message: 'Invalid id in 2!'});
+    errorResponseHandler(res, 500, 'Invalid beer!');
   }
 }
 
@@ -76,7 +50,5 @@ function isValidID(id) {
 
 module.exports = {
   validateBeer,
-  isValidID,
-  renderBeer,
-  isValidBeer
+  isValidID
 };
