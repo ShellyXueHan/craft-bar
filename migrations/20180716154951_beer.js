@@ -19,9 +19,10 @@ exports.up = function(knex, Promise) {
     table.text('brewery').notNullable();
     table.integer('type').notNullable();
     table.integer('price');
-    table.integer('rank');
-    table.integer('alcpercent');
-    table.integer('color');
+    // table.text('description');
+    // table.integer('rank');
+    // table.integer('alcpercent');
+    // table.integer('color');
   });
 };
 
