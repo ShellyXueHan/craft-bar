@@ -21,7 +21,8 @@ router.get('/', (req, res) => {
 });
 
 /**
- * This route start a form for new beer: 
+ * This route start a form for new beer:
+ *  - put before hte get-by-id to remove error
 **/
 router.get('/new', (req, res) => {
   res.render('new');
