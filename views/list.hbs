@@ -1,5 +1,9 @@
+<a role="button" class="btn btn-primary" href="/beer/new">
+  create new beer
+</a>
+<hr></hr>
 <ul class="list-group">
   {{#each beers}}
-    <li class="list-group-item">{{name}}</li>
+    <a href="/beer/{{id}}" class="list-group-item">{{name}}</a>
   {{/each}}
 </ul>

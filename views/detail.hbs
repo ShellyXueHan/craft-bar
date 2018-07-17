@@ -1,0 +1,12 @@
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title">Beer: {{name}}</h3>
+    <p class="card-text">Type: {{type}}</p>
+    <p class="card-text">Made by: {{brewery}}</p>
+    <p class="card-text">Price: {{price}}</p>
+    <form action="/beer/{{id}}?_method=DELETE" method="post">
+      <a href="/beer/{{id}}/edit" role="button" class="btn btn-primary">Edit beer</a>
+      <button type="submit" class="btn btn-danger">Delete beer</button>
+    </form>
+  </div>
+</div>

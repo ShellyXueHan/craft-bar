@@ -1,0 +1,33 @@
+<form class="form" action="/beer/{{id}}?_method=PUT" method="post">
+{{!-- <form class="form" action="/beer/{{id}}" method="post"></form> --}}
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input value="{{name}}" type="text" class="form-control" id="name" placeholder="Enter beer name" name="name">
+  </div>
+  <div class="form-group">
+    <label for="brewery">Brewery</label>
+    <input value="{{brewery}}" type="text" class="form-control" id="brewery" placeholder="Name of the brewery" name="brewery">
+  </div>
+  {{!-- <div class="form-group">
+    <label for="description">Description</label>
+    <textarea value="{{description}}" type="text" class="form-control" id="description" placeholder="Enter a description" name="description">
+    </textarea>
+  </div> --}}
+  <div class="form-group">
+    <label for="type">Type / Style</label>
+    <select class="form-control" id="type" name="type">
+      {{#select type}}
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      {{/select}}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="price">Price</label>
+    <input value="{{price}}" type="number" class="form-control" id="price" name="price">
+  </div>
+  <button type="submit" class="btn btn-default btn-danger">Update beer</button>
+</form>
