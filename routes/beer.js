@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-// Get the beer functions:
+// Get the helper functions:
 const validateBeer = require('../scripts/beerCheck').validateBeer;
 const isValidID = require('../scripts/beerCheck').isValidID;
-const renderBeer = require('../scripts/beerCheck').renderBeer;
-const isValidBeer = require('../scripts/beerCheck').isValidBeer;
+const errorResponseHandler = require('../scripts/errorHandlers').errorResponseHandler;
 
-// Connection to db:
-const knex = require('../db/knex');
+// Connect to query:
+const query = require('../db/query');
 
 // Routes here are with /beer path:
 
@@ -19,8 +18,8 @@ const knex = require('../db/knex');
  *  - render the 'list' view and pass in the beers
 **/
 router.get('/', (req, res) => {
-  knex('beer')
-    .select()
+  query
+    .getList()
     .then(beers => {
       res.render('list', {beers: beers});
     })
@@ -55,8 +54,8 @@ router.get('/:id/edit', (req, res) => {
 **/
 router.post('/', (req, res) => {
   validateBeer(req, res, (beer) => {
-    knex('beer')
-      .insert(beer, 'id')
+    query
+      .create(beer)
       .then(ids => {
         const id = ids[0];
         res.redirect(`/beer/${id}`);
@@ -69,11 +68,9 @@ router.post('/', (req, res) => {
 **/
 router.put('/:id', (req, res) => {
   validateBeer(req, res, (beer) => {
-    console.log(beer);
     const id = req.params.id;
-    knex('beer')
-      .where('id', id)
-      .update(beer, 'id')
+    query
+      .update(id, beer)
       .then(() => {
         res.redirect(`/beer/${id}`);
       });
@@ -84,21 +81,36 @@ router.put('/:id', (req, res) => {
  * This route deletes a beer and redirect back to list: 
 **/
 router.delete('/:id', (req, res) => {
-  console.log('delete the beer');
   const id = req.params.id;
   if(isValidID(id)) {
-    knex('beer')
-      .where('id', id)
-      .del()
+    query
+      .delete(id)
       .then(() => {
         res.redirect('/beer');
       });
   } else {
-    res.status( 500);
-    res.render('error', {
-      message:  'Invalid id!'
-    });
+    errorResponseHandler(res, 500, 'Invalid beer ID! Cannot delete...');
   }
 });
+
+/**
+ * This function renders a beer and provide response:
+ *  - if beer ID is valid:
+ *    - get the beer details with the ID
+ *    - render the beer
+ *  - if not:
+ *    - 500 error
+**/
+function renderBeer(id, res, viewName) {
+  if(isValidID(id)) {
+    query
+      .getBeer(id)
+      .then(beer => {
+        res.render(viewName, beer);
+      });
+  } else {
+    errorResponseHandler(res, 500, 'Invalid beer ID! Cannot show...');
+  }
+}
 
 module.exports = router;
