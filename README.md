@@ -11,8 +11,6 @@
   - Mobile friendly
 - Backend, testing, frontend
 - [Agile approach]((https://trello.com/b/cFSZD5vf/craft-bar-website))
-<br />
-<br />
 <hr>
 
 ## Technical details:
@@ -36,23 +34,19 @@
    - Behaviour Driven Development Testing
    - Criterion
  - Automated testing: [sample from previous work](https://github.com/bcgov/range-web/tree/BDDTest)
-<br />
-<br />
 
 
 ### Frontend (minimal work):
  - Handlebars
  - Boostrap (**support mobile view**)
-<br />
-<br />
+
 <hr>
 
 ## Agile strategy:
 - [Trello board](https://trello.com/b/cFSZD5vf/craft-bar-website)
 - TDD for API unit testing
 - BDD for API design
-<br />
-<br />
+
 <hr>
 
 ## Installation steps:
@@ -77,8 +71,7 @@ check database with populated data
 `nodemon`
 
 run the app and access it at localhost:3000
-<br />
-<br />
+
 <hr>
 
 ### Test:
@@ -89,8 +82,7 @@ pre-test: lint check the formatting accoring to facebook style, set in .eslintrc
 `npm run test`
 
 this will execute the jest test, there are 5 unit test cases. [details](https://trello.com/c/zEy3WEgP/10-api-unit-testing)
-<br />
-<br />
+
 <hr>
 
 ### Production:
@@ -115,8 +107,7 @@ setup prod database
 `git push heroku master`
 
 push the project to Heroku and deploy
-<br />
-<br />
+
 <hr>
 
 
