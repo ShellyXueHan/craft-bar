@@ -6,12 +6,9 @@
     "start": "node ./bin/www",
     "test": "NODE_ENV=development jest",
     "lint": "eslint lib/**",
-    "coverage": "jest --collectCoverageFrom=routes/**.js --coverage routes"
+    "pre-deploy": "NODE_ENV=production"
   },
   "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "eslint": "^5.1.0",
