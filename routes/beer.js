@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 // Get the helper functions:
-const beerCheckHelper = require('../lib/beerCheck').validateBeer;
+const beerCheckHelper = require('../lib/beerCheck');
 const errorHelper = require('../lib/errorHandlers');
 const authHelpers = require('../lib/authChecks');
 
@@ -24,8 +24,11 @@ function renderBeer(id, res, viewName, isAuthed) {
     query
       .getBeer(id)
       .then((beer) => {
-        // beer.isAuthed = isAuthed;
-        res.render(viewName, { beer, isAuthed });
+        beer.isAuthed = isAuthed;
+        res.render(viewName, beer);
+      })
+      .catch((err) => {
+        errorHelper.errorResponseHandler(res, 400, 'Invalid beer ID format!');
       });
   } else {
     errorHelper.errorResponseHandler(res, 500, 'Invalid beer ID! Cannot show...');
@@ -46,6 +49,9 @@ router.get('/', (req, res) => {
     .getList()
     .then((beers) => {
       res.render('list', { beers, isAuthed });
+    })
+    .catch((err) => {
+      errorHelper.errorResponseHandler(res, 400, 'No beer now..ops');
     });
 });
 
@@ -63,7 +69,7 @@ router.get('/new', (req, res) => {
  *    - show eidt & delete button
  */
 router.get('/:id', (req, res) => {
-  const { id } = req.params.id;
+  const id = req.params.id;
   const isAuthed = authHelpers.isAuthed(req);
   renderBeer(id, res, 'detail', isAuthed);
 });
@@ -73,12 +79,12 @@ router.get('/:id', (req, res) => {
  *  - assume user will not access this api unauthrized:
  */
 router.get('/:id/edit', (req, res) => {
-  const { id } = req.params.id;
+  const id = req.params.id;
   renderBeer(id, res, 'edit', true);
 });
 
 /**
- * This route psot a new beer and redirect to the newly create beer view:
+ * This route post a new beer and redirect to the newly create beer view:
  */
 router.post('/', (req, res) => {
   beerCheckHelper.validateBeer(req, res, (beer) => {
@@ -87,6 +93,9 @@ router.post('/', (req, res) => {
       .then((ids) => {
         const id = ids[0];
         res.redirect(`/beer/${id}`);
+      })
+      .catch((err) => {
+        errorHelper.errorResponseHandler(res, 500, 'Server not happy getting the new beer!');
       });
   });
 });
@@ -96,11 +105,14 @@ router.post('/', (req, res) => {
  */
 router.put('/:id', (req, res) => {
   beerCheckHelper.validateBeer(req, res, (beer) => {
-    const { id } = req.params.id;
+    const id = req.params.id;
     query
       .update(id, beer)
       .then(() => {
         res.redirect(`/beer/${id}`);
+      })
+      .catch((err) => {
+        errorHelper.errorResponseHandler(res, 500, 'Server not happy getting the new beer!');
       });
   });
 });
@@ -109,12 +121,15 @@ router.put('/:id', (req, res) => {
  * This route deletes a beer and redirect back to list:
  */
 router.delete('/:id', (req, res) => {
-  const { id } = req.params.id;
+  const id = req.params.id;
   if (beerCheckHelper.isValidID(id)) {
     query
       .delete(id)
       .then(() => {
         res.redirect('/beer');
+      })
+      .catch((err) => {
+        errorHelper.errorResponseHandler(res, 400, 'This beer is gone already!');
       });
   } else {
     errorHelper.errorResponseHandler(res, 500, 'Invalid beer ID! Cannot delete...');
