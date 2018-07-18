@@ -3,14 +3,8 @@
  * name - String
  * brewery - Stirng
  * type - int
- * price - double
- * 
- * rank - int
- * 
- * alchoho percentage - double
- * color - int
- * ???
- **/
+ * price - int
+ */
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('beer', (table) => {
