@@ -5,6 +5,7 @@ const router = express.Router();
 const validateBeer = require('../lib/beerCheck').validateBeer;
 const isValidID = require('../lib/beerCheck').isValidID;
 const errorResponseHandler = require('../lib/errorHandlers').errorResponseHandler;
+const authHelpers = require('../lib/authChecks');
 
 // Connect to query:
 const query = require('../db/query');
@@ -16,13 +17,16 @@ const query = require('../db/query');
  *  - select the beer table,
  *  - get all the beers from the table,
  *  - render the 'list' view and pass in the beers
+ *  - check if user is employee:
+ *    - show create button is yes
 **/
 router.get('/', (req, res) => {
+  const isAuthed = authHelpers.isAuthed(req);
   query
-    .getList()
-    .then(beers => {
-      res.render('list', {beers: beers});
-    })
+  .getList()
+  .then(beers => {
+    res.render('list', {beers: beers, isAuthed: isAuthed});
+  });
 });
 
 /**
@@ -34,19 +38,23 @@ router.get('/new', (req, res) => {
 });
 
 /**
- * This route shows a beer in detail view: 
+ * This route shows a beer in detail view:
+ *  - check if user is employee:
+ *    - show eidt & delete button
 **/
 router.get('/:id', (req, res) => {
   const id = req.params.id;
-  renderBeer(id, res, 'detail');
+  const isAuthed = authHelpers.isAuthed(req);
+  renderBeer(id, res, 'detail', isAuthed);
 });
 
 /**
  * This route show a beer for edit: 
+ *  - assume user will not access this api unauthrized:
 **/
 router.get('/:id/edit', (req, res) => {
   const id = req.params.id;
-  renderBeer(id, res, 'edit');
+  renderBeer(id, res, 'edit', true);
 });
 
 /**
@@ -101,11 +109,12 @@ router.delete('/:id', (req, res) => {
  *  - if not:
  *    - 500 error
 **/
-function renderBeer(id, res, viewName) {
+function renderBeer(id, res, viewName, isAuthed) {
   if(isValidID(id)) {
     query
       .getBeer(id)
       .then(beer => {
+        beer.isAuthed = isAuthed;
         res.render(viewName, beer);
       });
   } else {
