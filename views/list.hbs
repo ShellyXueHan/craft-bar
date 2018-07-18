@@ -1,0 +1,20 @@
+<h1>All the beers!</h1>
+<a href="/" role="button" class="btn btn-primary">Back to home</a>
+<hr></hr>
+<div>
+  {{#if isAuthed}}
+    <a role="button" id="createBeer" class="btn btn-primary" href="/beer/new">Create new beer</a>
+    <hr></hr>
+    <form class="form" action="/auth/logout" method="post">
+      <button type="submit" class="btn btn-default btn-primary">Logout</button>
+    </form>
+  {{else}}
+    <a href="/auth" role="button" class="btn btn-primary">Admin Portal</a>
+  {{/if}}
+</div>
+<hr></hr>
+<ul class="list-group">
+  {{#each beers}}
+    <a href="/beer/{{id}}" class="list-group-item">{{name}}</a>
+  {{/each}}
+</ul>

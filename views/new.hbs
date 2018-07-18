@@ -1,0 +1,26 @@
+<h1>Create new beer!</h1>
+<form class="form" action="/beer" method="post">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" placeholder="Enter beer name" name="name">
+  </div>
+  <div class="form-group">
+    <label for="brewery">Brewery</label>
+    <input type="text" class="form-control" id="brewery" placeholder="Name of the brewery" name="brewery">
+  </div>
+  <div class="form-group">
+    <label for="type">Type / Style</label>
+    <select class="form-control" id="type" name="type">
+      <option value="1">Ales</option>
+      <option value="2">Lagers</option>
+      <option value="3">Stouts and Porters</option>
+      <option value="4">Malts</option>
+      <option value="5">Can't define!</option>
+    </select>
+  </div>
+    <div class="form-group">
+    <label for="price">Price</label>
+    <input type="number" class="form-control" id="price" name="price">
+  </div>
+  <button type="submit" class="btn btn-default btn-primary">Create beer</button>
+</form>

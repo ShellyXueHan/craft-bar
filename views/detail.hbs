@@ -1,0 +1,28 @@
+<h1>Beer detail!</h1>
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title">Beer name: {{name}}</h3>
+    <h3 class="card-title">Beer type:</h3>
+    <select disabled id="type" name="type">
+      {{#select type}}
+      <option value="1">Ales</option>
+      <option value="2">Lagers</option>
+      <option value="3">Stouts and Porters</option>
+      <option value="4">Malts</option>
+      <option value="5">Can't define!</option>
+      {{/select}}
+    </select>
+    <h3 class="card-text">Made by: {{brewery}}</h3>
+    <h3 class="card-text">Price: {{price}}</h3>
+    {{#if isAuthed}}
+      <form action="/beer/{{id}}?_method=DELETE" method="post">
+        <a href="/beer/{{id}}/edit" role="button" class="btn btn-primary">Edit beer</a>
+        <button type="submit" class="btn btn-danger">Delete beer</button>
+      </form>
+    {{/if}}
+  </div>
+</div>
+<hr></hr>
+<a href="/" role="button" class="btn btn-primary">Back to home</a>
+<hr></hr>
+<a href="/beer" role="button" class="btn btn-primary">Back to the beers!</a>
