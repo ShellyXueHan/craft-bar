@@ -1,3 +1,4 @@
+<h1>Update this Beer!</h1>
 <form class="form" action="/beer/{{id}}?_method=PUT" method="post">
 {{!-- <form class="form" action="/beer/{{id}}" method="post"></form> --}}
   <div class="form-group">
@@ -17,11 +18,11 @@
     <label for="type">Type / Style</label>
     <select class="form-control" id="type" name="type">
       {{#select type}}
-      <option value="1">Abbey Ale</option>
-      <option value="2">Amber Ale</option>
-      <option value="3">Belgian IPA</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
+      <option value="1">Ales</option>
+      <option value="2">Lagers</option>
+      <option value="3">Stouts and Porters</option>
+      <option value="4">Malts</option>
+      <option value="5">Can't define!</option>
       {{/select}}
     </select>
   </div>
